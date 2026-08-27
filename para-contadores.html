@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listo el día 1 · Control de Facturas</title>
+<meta name="description" content="Sus clientes le entregan el 14. Esto se lo tiene listo desde el 1: Excel, PDF de respaldo y un archivo que importa directo a su sistema.">
+
+<!-- La tarjeta que se ve al mandar el enlace por WhatsApp. Sin esto
+     sale un enlace pelado y parece spam. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Listo el día 1 · Control de Facturas">
+<meta property="og:description" content="Sus clientes le entregan el 14. Esto se lo tiene listo desde el 1, con el ITBMS aparte y el respaldo completo.">
+<meta property="og:url" content="https://facturas.mc2panama.com/para-contadores.html">
+<meta property="og:image" content="https://facturas.mc2panama.com/icon-512.png">
+<meta property="og:locale" content="es_PA">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>*{margin:0;padding:0;box-sizing:border-box}</style>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap">
+
+<style>
+  :root {
+    --arena:      #F6F3EE;
+    --papel:      #FFFFFF;
+    --arena-med:  #EDEAE3;
+    --grafito:    #2B2722;
+    --tinta:      #635B53;
+    --borde:      #DDD8CF;
+    --dorado:     #A8854E;
+    --dorado-tx:  #8A6A3B;
+    --dorado-pale:#EDE0CC;
+
+    --fondo:      var(--arena);
+    --sup:        var(--papel);
+    --sup-alt:    var(--arena-med);
+    --tx:         var(--grafito);
+    --tx-2:       var(--tinta);
+    --linea:      var(--borde);
+    --acento:     var(--dorado);
+    --acento-tx:  var(--dorado-tx);
+    --acento-bg:  var(--dorado-pale);
+    --oscuro-bg:  var(--grafito);
+    --oscuro-tx:  #F6F3EE;
+    --oscuro-tx2: #C9C1B8;
+
+    --display: "Fraunces", Georgia, "Times New Roman", serif;
+    --texto:   "Archivo", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --fondo:      #201D19;
+      --sup:        #2B2722;
+      --sup-alt:    #35302A;
+      --tx:         #F1EDE6;
+      --tx-2:       #B8AFA4;
+      --linea:      #423C34;
+      --acento:     #C4A06D;
+      --acento-tx:  #D9BC8C;
+      --acento-bg:  #3A3229;
+      --oscuro-bg:  #15130F;
+      --oscuro-tx:  #F1EDE6;
+      --oscuro-tx2: #A79E93;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --fondo:      #201D19;
+    --sup:        #2B2722;
+    --sup-alt:    #35302A;
+    --tx:         #F1EDE6;
+    --tx-2:       #B8AFA4;
+    --linea:      #423C34;
+    --acento:     #C4A06D;
+    --acento-tx:  #D9BC8C;
+    --acento-bg:  #3A3229;
+    --oscuro-bg:  #15130F;
+    --oscuro-tx:  #F1EDE6;
+    --oscuro-tx2: #A79E93;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--fondo);
+    color: var(--tx);
+    font-family: var(--texto);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hoja {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 0 22px 72px;
+  }
+
+  /* ---------- encabezado ---------- */
+  .cabeza {
+    padding: 56px 0 40px;
+    border-bottom: 1px solid var(--linea);
+  }
+
+  .marca {
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--acento-tx);
+    font-weight: 600;
+    margin: 0 0 22px;
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(2.1rem, 7vw, 3rem);
+    line-height: 1.12;
+    letter-spacing: -.015em;
+    margin: 0 0 20px;
+    text-wrap: balance;
+  }
+
+  .entrada {
+    font-size: 1.06rem;
+    color: var(--tx-2);
+    margin: 0;
+    max-width: 46ch;
+  }
+
+  /* ---------- la tira del mes ---------- */
+  .mes {
+    margin: 34px 0 0;
+    background: var(--sup);
+    border: 1px solid var(--linea);
+    border-radius: 4px;
+    padding: 18px 16px 16px;
+    overflow-x: auto;
+  }
+
+  .mes-rotulo {
+    font-size: 11px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--tx-2);
+    margin: 0 0 14px;
+    font-weight: 500;
+  }
+
+  .dias {
+    display: grid;
+    grid-template-columns: repeat(30, 1fr);
+    gap: 3px;
+    min-width: 420px;
+  }
+
+  .dia {
+    height: 30px;
+    border-radius: 2px;
+    background: var(--sup-alt);
+    position: relative;
+  }
+
+  .dia.corre { background: var(--acento-bg); }
+  .dia.tope  { background: var(--acento); }
+  .dia.libre { background: var(--sup-alt); }
+
+  .dia[data-n]::after {
+    content: attr(data-n);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 7px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--tx-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mes-pie {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 32px;
+    font-size: 13px;
+    color: var(--tx-2);
+  }
+
+  .clave { display: flex; align-items: center; gap: 7px; }
+  .muestra {
+    width: 13px; height: 13px; border-radius: 2px;
+    flex: none;
+  }
+
+  /* ---------- secciones ---------- */
+  section { padding-top: 48px; }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.42rem;
+    letter-spacing: -.01em;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+
+  .sub {
+    color: var(--tx-2);
+    margin: 0 0 26px;
+    max-width: 50ch;
+  }
+
+  /* ---------- los archivos ---------- */
+  .archivos {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .archivo {
+    background: var(--sup);
+    border: 1px solid var(--linea);
+    border-radius: 4px;
+    padding: 20px 22px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 16px;
+    align-items: baseline;
+  }
+
+  .ext {
+    font-family: var(--texto);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .09em;
+    color: var(--acento-tx);
+    background: var(--acento-bg);
+    padding: 4px 9px;
+    border-radius: 3px;
+    grid-row: span 2;
+    align-self: start;
+  }
+
+  .archivo h3 {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 600;
+    letter-spacing: -.005em;
+  }
+
+  .archivo p {
+    margin: 0;
+    color: var(--tx-2);
+    font-size: .95rem;
+  }
+
+  /* ---------- avisos ---------- */
+  .avisos {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--linea);
+  }
+
+  .aviso {
+    display: grid;
+    grid-template-columns: 4px 1fr;
+    gap: 20px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--linea);
+  }
+
+  .barra {
+    background: var(--acento);
+    border-radius: 2px;
+  }
+
+  .aviso h3 {
+    margin: 0 0 5px;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .aviso p { margin: 0; color: var(--tx-2); font-size: .95rem; }
+
+  /* ---------- la caja oscura ---------- */
+  .honesto {
+    margin-top: 48px;
+    background: var(--oscuro-bg);
+    color: var(--oscuro-tx);
+    border-radius: 4px;
+    padding: 30px 26px;
+  }
+
+  .honesto h2 { color: var(--oscuro-tx); margin-bottom: 16px; }
+
+  .honesto ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .honesto li {
+    color: var(--oscuro-tx2);
+    font-size: .96rem;
+    padding-left: 22px;
+    position: relative;
+  }
+
+  .honesto li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--acento);
+  }
+
+  .honesto strong { color: var(--oscuro-tx); font-weight: 600; }
+
+  /* ---------- cierre ---------- */
+  .cierre {
+    margin-top: 48px;
+    padding-top: 34px;
+    border-top: 2px solid var(--acento);
+  }
+
+  .cierre p { max-width: 48ch; }
+
+  .firma {
+    margin-top: 26px;
+    font-size: .93rem;
+    color: var(--tx-2);
+  }
+
+  .firma strong {
+    display: block;
+    color: var(--tx);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    body { font-size: 16px; }
+    .hoja { padding: 0 18px 56px; }
+    .cabeza { padding-top: 40px; }
+  }
+</style>
+
+<div class="hoja">
+
+  <header class="cabeza">
+    <p class="marca">Control de Facturas · Panamá</p>
+    <h1>Sus clientes le entregan el 14. Esto se lo tiene listo desde el 1.</h1>
+    <p class="entrada">
+      Ellos le toman foto a la factura cuando se las dan. Usted recibe el mes
+      cerrado, con el ITBMS separado y el respaldo completo.
+    </p>
+
+    <div class="mes">
+      <p class="mes-rotulo">Un mes cualquiera, como se vive hoy</p>
+      <div class="dias">
+        <span class="dia corre" data-n="1"></span>
+        <span class="dia corre"></span><span class="dia corre"></span>
+        <span class="dia corre"></span><span class="dia corre"></span>
+        <span class="dia corre"></span><span class="dia corre"></span>
+        <span class="dia corre"></span><span class="dia corre"></span>
+        <span class="dia corre"></span><span class="dia corre"></span>
+        <span class="dia corre"></span><span class="dia corre"></span>
+        <span class="dia corre"></span>
+        <span class="dia tope" data-n="15"></span>
+        <span class="dia libre"></span><span class="dia libre"></span>
+        <span class="dia libre"></span><span class="dia libre"></span>
+        <span class="dia libre"></span><span class="dia libre"></span>
+        <span class="dia libre"></span><span class="dia libre"></span>
+        <span class="dia libre"></span><span class="dia libre"></span>
+        <span class="dia libre"></span><span class="dia libre"></span>
+        <span class="dia libre"></span><span class="dia libre"></span>
+        <span class="dia libre" data-n="30"></span>
+      </div>
+      <div class="mes-pie">
+        <span class="clave">
+          <span class="muestra" style="background: var(--acento-bg)"></span>
+          Persiguiendo papeles
+        </span>
+        <span class="clave">
+          <span class="muestra" style="background: var(--acento)"></span>
+          Formulario 430
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>Qué le llega a usted</h2>
+    <p class="sub">
+      Tres archivos, el día que los pida. No un sobre de papeles ni un Excel
+      que haya que retranscribir.
+    </p>
+
+    <div class="archivos">
+      <article class="archivo">
+        <span class="ext">CSV</span>
+        <h3>Para importar directo</h3>
+        <p>
+          Entra a Peachtree o QuickBooks sin retipear. La columna de cuenta va
+          vacía a propósito: esa la llena usted, que es quien sabe el catálogo
+          del cliente.
+        </p>
+      </article>
+
+      <article class="archivo">
+        <span class="ext">XLSX</span>
+        <h3>Una hoja por mes, filtrable</h3>
+        <p>
+          Con totales que recalculan al filtrar. Subtotal, ITBMS y total en
+          columnas aparte, porque el impuesto se declara mes a mes.
+        </p>
+      </article>
+
+      <article class="archivo">
+        <span class="ext">PDF</span>
+        <h3>El respaldo de todas las facturas</h3>
+        <p>
+          Una foto por página, en orden. Es lo que se archiva y lo que la DGI
+          acepta como soporte si algún día pregunta.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tres errores que le llegan corregidos</h2>
+    <p class="sub">
+      Son los que aparecen cuando el cliente junta las facturas a las corridas
+      el día 14.
+    </p>
+
+    <div class="avisos">
+      <div class="aviso">
+        <span class="barra"></span>
+        <div>
+          <h3>La factura vino a nombre personal</h3>
+          <p>
+            Si el proveedor la emitió a nombre del dueño y no de la empresa, ese
+            crédito fiscal no sirve. El app lo avisa en el momento, con la foto
+            al lado, que es cuando todavía se puede pedir el cambio.
+          </p>
+        </div>
+      </div>
+
+      <div class="aviso">
+        <span class="barra"></span>
+        <div>
+          <h3>La misma factura, cargada dos veces</h3>
+          <p>
+            Se compara por RUC y número de factura. Aparece el aviso antes de
+            guardar, no cuando a usted no le cuadra el mes.
+          </p>
+        </div>
+      </div>
+
+      <div class="aviso">
+        <span class="barra"></span>
+        <div>
+          <h3>ITBMS que nunca existió</h3>
+          <p>
+            El combustible en Panamá es exento, igual que las medicinas y la
+            canasta básica. Si el papel no muestra la línea de impuesto, va en
+            cero. Nunca se deriva el 7% de un total.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="honesto">
+    <h2>Lo que no hace</h2>
+    <ul>
+      <li>
+        <strong>No declara nada.</strong> No presenta el 430 ni habla con la
+        DGI. Prepara lo que usted necesita para hacerlo.
+      </li>
+      <li>
+        <strong>No es infalible leyendo.</strong> La lectura la hace una IA y a
+        veces se equivoca. Por eso muestra los datos junto a la foto y no
+        guarda nada sin que la persona lo confirme.
+      </li>
+      <li>
+        <strong>No lo reemplaza a usted.</strong> Le quita el trabajo de
+        digitar y de perseguir papeles. El criterio contable sigue siendo suyo.
+      </li>
+    </ul>
+  </div>
+
+  <div class="cierre">
+    <h2>Lo hice para mis propias obras</h2>
+    <p>
+      Tenía las facturas en un sobre en la gaveta hasta que me tocó buscar una
+      de hacía ocho meses y no apareció. El formato de salida salió de lo que
+      me pidió un contador, no de lo que a mí me pareció.
+    </p>
+    <p>
+      Si quiere verlo con una factura suya, son diez minutos. Y si hay algo que
+      usted haría distinto, dígamelo con confianza: para eso se lo enseño.
+    </p>
+    <p class="firma">
+      <strong>Leonardo Ortega</strong>
+      Panamá · responda este mensaje y coordinamos
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>
